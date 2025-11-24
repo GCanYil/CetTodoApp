@@ -21,6 +21,17 @@ public partial class MainPage : ContentPage
 
     private void AddButton_OnClicked(object? sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(Title.Text))
+        {
+            DisplayAlert("Error", " Please enter a title", "OK");
+            return;
+        }
+
+        if (DueDate.Date < DateTime.Now.Date)
+        {
+            DisplayAlert("Error", "You can not add tasks that are due past", "OK");
+            return;
+        }
         FakeDb.AddToDo(Title.Text, DueDate.Date);
         Title.Text = string.Empty;
         DueDate.Date=DateTime.Now;
